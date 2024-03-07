@@ -1,0 +1,1 @@
+	Sinh viên 1		ID: 1		FirstName: 1		LastName: 1		age: 1		sex: 1		point: 1.0	Sinh viên 2		ID: 2		FirstName: 2		LastName: 2		age: 2		sex: 2		point: 2.0
