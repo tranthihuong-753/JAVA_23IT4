@@ -34,11 +34,7 @@ class Student extends Person{
     @Override
     public void a(String a, int b){
         
-    }  
-    @Override
-    public void displayInfo(){
-        
-    }      
+    }   
     
     protected String studentId;
     public void b(String a, int b, String c){
@@ -46,9 +42,10 @@ class Student extends Person{
         this.age=b;
         this.studentId=c;
     }
-    public void displayStudentInfo(){
-        System.out.println("name: "+name);
-        System.out.println("age: "+age);        
+    
+    @Override
+    public void displayInfo(){
+        super.displayInfo();
         System.out.println("studentId: "+studentId);    
     }
 }
@@ -59,7 +56,7 @@ public class ex20 {
     public static void main(String[] args){
         Student a=new Student();
         a.b("Nguyễn Tiến Dũng", 21, "CMCUNI12345");
-        a.displayStudentInfo();
+        a.displayInfo();
     }
     
 }

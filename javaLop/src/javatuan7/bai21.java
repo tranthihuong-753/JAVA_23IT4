@@ -21,7 +21,7 @@ class Shape{
     public void setcolor(String a){
         this.color=a;
     }
-    public void displayColor(){
+    public void display(){
         System.out.println("color: "+color);
     }
 }
@@ -31,17 +31,15 @@ class Circle extends Shape{
     public void setcolor(String a){
         
     }
-    @Override
-    public void displayColor(){
-        
-    }   
     protected double radius;
     public void set_circle(String a, double b){
         this.color=a;
         this.radius=b;
     }
-    public void display_circle(){
-        System.out.println("color: "+color);
+    
+    @Override
+    public void display(){
+        super.display();
         System.out.println("radius: "+radius);
     }
 }
@@ -49,7 +47,7 @@ public class bai21 {
     public static void main(String[] args){
         Circle a=new Circle();
         a.set_circle("Red", 5.0);
-        a.display_circle();
+        a.display();
     }
     
 }
