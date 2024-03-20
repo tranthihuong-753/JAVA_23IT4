@@ -1,7 +1,3 @@
-/*
-bài 11; 
-Sửa code 
- */
 package javatuanTET;
 
 // Tính diện tích các hình tứ giác biết độ dài 4 cạnh và 1 đường chéo
@@ -84,7 +80,6 @@ class hinhchunhat extends hinhbinhhanh{
         return ab*bc;
     }
 }
-
  
 
 class hinhvuong extends hinhchunhat{
@@ -97,6 +92,7 @@ class hinhvuong extends hinhchunhat{
         return ab*ab;
     }   
 }
+
 
 public class bai_11 {
 
