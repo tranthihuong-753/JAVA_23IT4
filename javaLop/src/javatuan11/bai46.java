@@ -24,14 +24,13 @@ import javax.swing.*;
 
 class form1 extends JFrame{
     public form1(){
-        JFrame frm1= new JFrame();
+        JFrame frm1= new JFrame("Form ví dụ");
         frm1.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frm1.setTitle("Form ví dụ");
         
         JPanel a=new JPanel();
+        a.setLocation(500, 500);
         TextField a1=new TextField(30);//30 là độ rộng 
         a.add(a1);
-        a.setLocation(500, 500);
         a1.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {

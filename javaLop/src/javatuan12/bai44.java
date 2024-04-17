@@ -24,22 +24,6 @@ package javatuan12;
 import java.io.*;
 import java.util.*;
 
-class student{
-    public String id;
-    public String name;
-    public int age;
-    public String sex;
-    public float point;  
-    //Phải dùng hàm tạo 
-    public student(String a, String b, int c, String d, float e){
-        this.id=a;
-        this.name=b;
-        this.age=c;
-        this.sex=d;
-        this.point=e;
-    }
-}
-
 public class bai44 {
     //nhập 1 danh sách sinh viên từ bàn phím và trả về danh sách đã nhập
     //kết thúc nhập khi mã sinh viên nhập là "#"
