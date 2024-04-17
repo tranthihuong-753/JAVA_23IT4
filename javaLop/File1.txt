@@ -1,0 +1,6 @@
+id_s : 1
+name_s : 1
+age_s : 1
+sex_s : 1
+point_s : 2.0
+
