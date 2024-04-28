@@ -16,7 +16,7 @@ import javax.swing.JScrollPane;
 
 class a{
     public a(){
-        tao_GUI(table_st());
+        tao_GUI();
     }
 }
 

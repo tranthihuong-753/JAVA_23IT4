@@ -1,7 +1,12 @@
 package ham;
 
 import java.awt.GridLayout;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static javatuan12.bai44.listStudent;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +29,8 @@ public class GUI {
     //Tự thêm JButton, ... 
     //Input no
     //Output GUI 
-    public static void tao_GUI(JPanel panel){
+    //Muốn có bảng thì phải liên kết với ham.GUI.table_st (thêm tham số JPanel cho tao_GUI , trong đó JPanel là kết quả trả về của table_st )
+    public static void tao_GUI(){
         JFrame a=new JFrame();
         a.setExtendedState(JFrame.MAXIMIZED_BOTH);//Để jframe hiện lên full màn hình
         
@@ -44,9 +50,7 @@ public class GUI {
         //txt khác
         b2.add(b21);
         a1.add(b2);  
-        
-        a1.add(panel);
-        
+                
         JScrollPane a3=new JScrollPane(a1);
         a.add(a3);
         a.setVisible(true);
@@ -77,4 +81,23 @@ public class GUI {
 
         return x;
     }
+    
+    Connection conn=null;
+    public static Connection abc(){
+        //Thực thi code 
+        try{
+            //Đăng ký trình điều khiển JDBC 
+            Class.forName("org.sqlite.JDBC");
+            //Sử dụng JDBC tạo đường kết nối đến CSDL 
+            Connection conn=DriverManager.getConnection("jdbc:sqlite:Swing1042024.db");
+            JOptionPane.showMessageDialog(null,"kết nối đã được thiết lập");
+            return conn;
+        //Xử lý ngoại lệ    
+        }catch(Exception e){ 
+            JOptionPane.showMessageDialog(null, e);
+            return null;
+        }
+    } 
+        
+    
 }

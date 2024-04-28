@@ -5,6 +5,7 @@ public class Sosanh {
     //Input 2 chuỗi 
     //Output true/false 
     public static boolean equals_st(Object a, Object b){
+        //Dùng equalsIgnoreCase thì sẽ không phân biệt in hoa in thường 
         if(a.equals(b)){
             return true;
         }

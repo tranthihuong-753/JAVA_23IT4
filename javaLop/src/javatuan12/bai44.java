@@ -8,16 +8,16 @@ Viết hàm public static nhập 1 danh sách sinh viên từ bàn phím và tr�
 + hàm trả lại danh sách sinh viên.
 + Gọi hàm trong hàm main() để kiểm tra. Duyệt danh sách sinh viên và hiển thị lên màn hình.
 Trong lớp chứa hàm main():
-Viết hàm public static   Sắp xếp danh sách tăng dần của điểm trung bình và hiển thị.
-Viết hàm public static   Sắp xếp danh sách giảm dần của điểm trung bình và hiển thị.
-Viết hàm public static   Đếm số sinh viên có điểm trung bình > 5.0 và hiển thị.
-Viết hàm public static   Hiển thị sinh viên đầu tiên trong danh sách có điểm > 9.0.
-Viết hàm public static   Hiển thị  sinh viên có điểm trung bình lớn nhất, nhỏ nhất.
-Viết hàm public static   Đảo ngược danh sách sinh viên để tạo ra 1 danh sách khác và hiển thị danh sách kết quả.
-Viết hàm public static   Ghi danh sách sinh viên lên 1 file .txt
-Viết hàm public static   Ghi danh sách sinh viên lên 1 file .csv
-Viết hàm public static   Ghi danh sách sinh viên lên 1 file .json.
-Viết hàm public static   Hiển thị danh sách sinh viên lên 1 grid trong chế độ đồ họa sử dụng Java swing.
+Viết hàm public static Sắp xếp danh sách tăng dần của điểm trung bình và hiển thị.
+Viết hàm public static Sắp xếp danh sách giảm dần của điểm trung bình và hiển thị.
+Viết hàm public static Đếm số sinh viên có điểm trung bình > 5.0 và hiển thị.
+Viết hàm public static Hiển thị sinh viên đầu tiên trong danh sách có điểm > 9.0.
+Viết hàm public static Hiển thị  sinh viên có điểm trung bình lớn nhất, nhỏ nhất.
+Viết hàm public static Đảo ngược danh sách sinh viên để tạo ra 1 danh sách khác và hiển thị danh sách kết quả.
+Viết hàm public static Ghi danh sách sinh viên lên 1 file .txt
+Viết hàm public static Ghi danh sách sinh viên lên 1 file .csv
+Viết hàm public static Ghi danh sách sinh viên lên 1 file .json.
+Viết hàm public static Hiển thị danh sách sinh viên lên 1 grid trong chế độ đồ họa sử dụng Java swing.
  */
 package javatuan12;
 
@@ -211,7 +211,7 @@ public class bai44 {
 //        listStudent b = new listStudent();
 //        List<student\\\\> a = new ArrayList<>();   
         List<student> sts=listStudent();
-        filejson(sts);
+        filecsv(sts);
 //        List<student>stss=sthuhu(sts);
 //        student stsss=stpointmax(sts);
 //        for(student stsss:stss){
