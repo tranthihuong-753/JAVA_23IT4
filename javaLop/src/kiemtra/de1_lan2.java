@@ -111,6 +111,7 @@ class GUI2{
         //Tạo JFrame 
         JFrame jfmain=new JFrame("EXP");
         jfmain.setExtendedState(JFrame.MAXIMIZED_BOTH);//Để jframe hiện lên full màn hình
+        use_flatlaf();
         
         JPanel jpmain=new JPanel(new GridLayout(2, 1)); // Chia panel thành 2 hàng 1 cột 
         
@@ -188,7 +189,6 @@ class GUI2{
             ex.printStackTrace();
         }          
     }    
-
 }
 
 public class de1_lan2{
@@ -455,7 +455,7 @@ public class de1_lan2{
             }
         }        
         GUI2 gui=new GUI2(listL);
-        gui.use_flatlaf();
+//        gui.use_flatlaf();
     }
     //Hàm kiểm tra xem chuỗi đầu vào có phải toàn là STT 0-9 không , trả về true/false 
     public static boolean isInteger(String str) {
