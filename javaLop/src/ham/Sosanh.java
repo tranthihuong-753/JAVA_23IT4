@@ -22,4 +22,10 @@ public class Sosanh {
         }
         return false;
     }
+    //Kiểm tra String có full int không 
+    //input String a
+    //Output : true/false 
+    public static boolean isInteger(String str) {
+        return str.matches("\\d+");
+    }
 }

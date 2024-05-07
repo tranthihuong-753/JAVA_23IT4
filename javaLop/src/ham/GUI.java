@@ -82,6 +82,7 @@ public class GUI {
         return x;
     }
     
+    //Dùng JDBC kết nối database 
     Connection conn=null;
     public static Connection abc(){
         //Thực thi code 
@@ -89,7 +90,7 @@ public class GUI {
             //Đăng ký trình điều khiển JDBC 
             Class.forName("org.sqlite.JDBC");
             //Sử dụng JDBC tạo đường kết nối đến CSDL 
-            Connection conn=DriverManager.getConnection("jdbc:sqlite:Swing1042024.db");
+            Connection conn=DriverManager.getConnection("jdbc:sqlite:Name_database.db");
             JOptionPane.showMessageDialog(null,"kết nối đã được thiết lập");
             return conn;
         //Xử lý ngoại lệ    
@@ -99,5 +100,13 @@ public class GUI {
         }
     } 
         
+    //Dùng flatlaf cho giao diện sang xịn mịn hơn 
+    public static void use_flatlaf(){
+        try {
+            UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf());
+        } catch (UnsupportedLookAndFeelException ex) {
+            ex.printStackTrace();
+        }          
+    }
     
 }

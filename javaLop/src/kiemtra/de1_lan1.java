@@ -15,12 +15,12 @@ import javax.swing.JTextField;
 
 class GUI{
     public GUI(List<Leader> listL){
-        JFrame a=new JFrame("EXP");
-        a.setExtendedState(JFrame.MAXIMIZED_BOTH);//Để jframe hiện lên full màn hình
+        JFrame jfmain=new JFrame("EXP");
+        jfmain.setExtendedState(JFrame.MAXIMIZED_BOTH);//Để jframe hiện lên full màn hình
         
-        JPanel a1=new JPanel(new GridLayout(2, 1)); // Chia panel thành 2 hàng 1 cột 
+        JPanel jpmain=new JPanel(new GridLayout(2, 1)); // Chia panel thành 2 hàng 1 cột 
         
-        JPanel a111=new JPanel();
+        JPanel jp1=new JPanel();
         JPanel a11=new JPanel();
         JTextField jt_employyID=new JTextField(30);
         JButton jb_employyID=new JButton("Tìm kiếm");
@@ -34,12 +34,12 @@ class GUI{
         out.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                a.setVisible(false);
+                jfmain.setVisible(false);
             }
         });
         a12.add(out);
-        a111.add(a11);
-        a111.add(a12);
+        jp1.add(a11);
+        jp1.add(a12);
         // Dữ liệu mảng 2 chiều đại diện cho các dòng và cột trong bảng
         Object[][] data= new Object[listL.size()][5];
         
@@ -81,12 +81,12 @@ class GUI{
             }
         });
         
-        a1.add(a111);
-        a1.add(sc_table);
+        jpmain.add(jp1);
+        jpmain.add(sc_table);
         
-        JScrollPane js=new JScrollPane(a1);
-        a.add(js);
-        a.setVisible(true);
+        JScrollPane js=new JScrollPane(jpmain);
+        jfmain.add(js);
+        jfmain.setVisible(true);
     }
 }
 
