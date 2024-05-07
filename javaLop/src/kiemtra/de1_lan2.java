@@ -8,12 +8,162 @@ import java.util.List;
 import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+//jpanel (jpanel(tìm kiếm+jtext) + jpanel(thoát)) --> 3 cai thang hang 
+//jpanel (jpanel( jpanel(tìm kiếm)+ jpanel(jtext) ) + jpanel(thoát)) --> 2 tren 1 duoi 
+//tao bang xong moi tao jscrollpane và tiện chèn luôn table vào thì mới được 
+class GUI2{
+    public GUI2(List<?>[] list){
+        //Tạo JFrame 
+        JFrame jframe_big=new JFrame("EXP");
+        jframe_big.setExtendedState(JFrame.MAXIMIZED_BOTH);//Để jframe hiện lên full màn hình
+        use_flatlaf();
+        
+            JPanel jpanel_big=new JPanel(new GridLayout(2, 1)); // Chia panel thành 2 hàng 1 cột 
+                //JPanel chứa jtextfield, nút tìm kiếm, nút thoát 
+                JPanel jb1=new JPanel();
+                    //JPanel chứa jtextfield, nút tìm kiếm
+                    JPanel jpanel_1_1=new JPanel();
+                        JTextField jt_employeeID=new JTextField(30);
+                        JButton jb_employyID=new JButton("Tìm kiếm");
+                        jpanel_1_1.add(jt_employeeID);
+                        jpanel_1_1.add(jb_employyID);
+
+                    JPanel a12=new JPanel();
+                        JButton out=new JButton("Thoát");
+                        out.setLocation(50,50);
+                        a12.add(out);
+                    jb1.add(jpanel_1_1);
+                    jb1.add(a12);
+
+                // Dữ liệu mảng 2 chiều đại diện cho các dòng và cột trong bảng
+                Object[][] data= new Object[list.length][5];
+                int r = 0; // Đổi tên biến row thành rowIndex
+                List<Fresher2> listfresher=(List<Fresher2>) list[0];
+                for(Fresher2 x: listfresher){
+                    data[r][0] = x.employeeID;
+                    data[r][1] = x.cardID;
+                    data[r][2] = x.name;
+                    data[r][3] = x.skill;
+                    data[r][4] = "Fresher";   
+                    r++;
+                }      
+                List<Junior_Senior2> listJunior_Senior=(List<Junior_Senior2>) list[1];
+                for(Junior_Senior2 x: listJunior_Senior){
+                    data[r][0] = x.employeeID;
+                    data[r][1] = x.cardID;
+                    data[r][2] = x.name;
+                    data[r][3] = x.skill;
+                    data[r][4] = "Junior_Senior";   
+                    r++;
+                }      
+                List<Leader2> listLeader=(List<Leader2>) list[2];
+                for(Leader2 x: listLeader){
+                    data[r][0] = x.employeeID;
+                    data[r][1] = x.cardID;
+                    data[r][2] = x.name;
+                    data[r][3] = x.skill;
+                    data[r][4] = "Leader";   
+                    r++;
+                }  
+                // Tên các cột
+                String[] c = {"employeeID", "cardID", "name", "skill", "Vị trí"};
+                // Tạo một bảng với dữ liệu và tên cột
+                JTable table = new JTable(data, c);
+                // Đặt phương pháp cho bảng không cho phép chỉnh sửa dữ liệu trực tiếp
+                table.setDefaultEditor(Object.class, null);        
+                // Thêm bảng vào JScrollPane để có thanh cuộn
+                JScrollPane sc_table = new JScrollPane(table);      
+
+            jpanel_big.add(jb1);
+            jpanel_big.add(sc_table);
+
+//            JScrollPane js=new JScrollPane(jpanel_big);
+        jframe_big.add(jpanel_big);
+        jframe_big.setVisible(true); 
+        
+        //Tìm kiến theo employyID , trùng thì bôi xanh 
+        jb_employyID.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String txtID = jt_employeeID.getText();
+                if(txtID.length()!=6 || txtID.matches("\\d+")==false){
+                    JOptionPane.showMessageDialog(null, "Chú ý bạn đang tìm kiếm theo employeeID là một chuỗi số nguyên dương có độ dài là 6.","Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+                for (int row = 0; row < list.length; row++){
+                    if(table.getValueAt(row, 0)!=null){
+                        String employeeID = table.getValueAt(row, 0).toString();
+                        if (employeeID.equals(txtID)) {
+                            table.setRowSelectionInterval(row, row);
+                        } else {
+                            table.removeRowSelectionInterval(row, row);
+                        }                        
+                    }
+                }
+            }
+        });    
+        
+        //jt_employyID có ENTER thì thực hiện tìm kiếm 
+        jt_employeeID.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String txtID = jt_employeeID.getText();
+                if(txtID.length()!=6 || txtID.matches("\\d+")==false){
+                    JOptionPane.showMessageDialog(null, "Chú ý bạn đang tìm kiếm theo employeeID là một chuỗi số nguyên dương có độ dài là 6.","Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+                for (int row = 0; row < table.getRowCount(); row++) {
+                    if (table.getValueAt(row, 0) != null) {
+                        String employeeID = table.getValueAt(row, 0).toString();
+                        if (employeeID.equals(txtID)) {
+                            table.setRowSelectionInterval(row, row);
+                        } else {
+                            table.removeRowSelectionInterval(row, row);
+                        }
+                    }
+                }
+            }
+        });  
+        //Thoát
+        out.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jframe_big.setVisible(false);
+            }
+        });
+        //Nếu list = null thì jpanel_1_1 ở dạng disable 
+        int i=0;
+        for(List<?> a:list){
+            for(Object obj:a){
+                if(obj instanceof Leader2){
+                    i++;
+                }else if(obj instanceof Junior_Senior2){
+                    i++;
+                }else if(obj instanceof Fresher2){
+                    i++;
+                }
+            }
+        }    
+        if(i==0){
+            jpanel_1_1.setVisible(false);
+        }else{
+            System.out.println(i);
+        }
+    }
+    //Hàm sử dụng flatlaf 
+    public static void use_flatlaf(){
+        try {
+            UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf());
+        } catch (UnsupportedLookAndFeelException ex) {
+            ex.printStackTrace();
+        }          
+    }    
+}
 
 //interface KPI 
 interface KPI2{
@@ -104,91 +254,6 @@ final class Leader2 extends Junior_Senior2{
         }
         return quality()*60-10+project*3;
     }     
-}
-
-class GUI2{
-    public GUI2(List<Leader2> listL){
-        //Tạo JFrame 
-        JFrame jfmain=new JFrame("EXP");
-        jfmain.setExtendedState(JFrame.MAXIMIZED_BOTH);//Để jframe hiện lên full màn hình
-        use_flatlaf();
-        
-        JPanel jpmain=new JPanel(new GridLayout(2, 1)); // Chia panel thành 2 hàng 1 cột 
-        
-        JPanel jp1=new JPanel();
-            JPanel a11=new JPanel();
-            JTextField jt_employyID=new JTextField(30);
-            JButton jb_employyID=new JButton("Tìm kiếm");
-
-            a11.add(jt_employyID);
-            a11.add(jb_employyID);
-        
-            JPanel a12=new JPanel();
-            JButton out=new JButton("Thoát");
-            out.setLocation(50,50);
-            out.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    jfmain.setVisible(false);
-                }
-            });
-            a12.add(out);
-        jp1.add(a11);
-        jp1.add(a12);
-        
-        // Dữ liệu mảng 2 chiều đại diện cho các dòng và cột trong bảng
-        Object[][] data= new Object[listL.size()][5];
-        
-        int rowIndex = 0; // Đổi tên biến row thành rowIndex
-        for (Leader2 x : listL) {
-            data[rowIndex][0] = x.employeeID;
-            data[rowIndex][1] = x.cardID;
-            data[rowIndex][2] = x.name;
-            data[rowIndex][3] = x.skill;
-            data[rowIndex][4] = "?";
-            rowIndex++;
-        }
-        // Tên các cột
-        String[] columnNames = {"employeeID", "cardID", "name", "skill", "Vị trí ?? "};
-        // Tạo một bảng với dữ liệu và tên cột
-        JTable table = new JTable(data, columnNames);
-        // Đặt phương pháp cho bảng không cho phép chỉnh sửa dữ liệu trực tiếp
-        table.setDefaultEditor(Object.class, null);        
-        // Thêm bảng vào JScrollPane để có thanh cuộn
-        JScrollPane sc_table = new JScrollPane(table);      
-        
-        //Tìm kiến theo employyID , trùng thì bôi xanh 
-        jb_employyID.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String searchValue = jt_employyID.getText();
-
-                for (int row = 0; row < table.getRowCount(); row++) {
-                    String employeeID = table.getValueAt(row, 0).toString();
-                    if (employeeID.equals(searchValue)) {
-                        table.addRowSelectionInterval(row, row);
-                    } else {
-                        table.removeRowSelectionInterval(row, row);
-                    }
-                }
-            }
-        });
-        
-        jpmain.add(jp1);
-        jpmain.add(sc_table);
-        
-        JScrollPane js=new JScrollPane(jpmain);
-        jfmain.add(js);
-        jfmain.setVisible(true);        
-    }
-    //Hàm sử dụng flatlaf 
-    public static void use_flatlaf(){
-        try {
-            UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf());
-        } catch (UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
-        }          
-    }    
 }
 
 public class de1_lan2{
@@ -393,7 +458,7 @@ public class de1_lan2{
     
     //Hàm hiển thị đối tượng(ID) có kỹ năng javacode 
     public static void hai_b(List<?>[] listmain){
-        System.out.println("Đối tượng có javacode là : ");
+        System.out.println("Đối tượng có skill = javacode là : ");
         int i=0;
        for(List<?> list:listmain){
            for(Object obj:list){
@@ -401,61 +466,41 @@ public class de1_lan2{
                     Fresher2 fr = (Fresher2) obj;
                     String skill = fr.skill;
                     if("javacode".equalsIgnoreCase(skill)){
-                        System.out.println("\bFresher "+fr.employeeID);
+                        System.out.println("    Fresher "+fr.employeeID);
                         i++;
                     }
                }else if(obj instanceof Junior_Senior2){
                     Junior_Senior2 js = (Junior_Senior2) obj;
                     String skill = js.skill;
                     if("javacode".equalsIgnoreCase(skill)){
-                        System.out.println("\bJunior_Senior "+js.employeeID);
+                        System.out.println("    Junior_Senior "+js.employeeID);
                         i++;
                     }
                }else if(obj instanceof Leader2){
                     Leader2 le = (Leader2) obj;
                     String skill = le.skill;
                     if("javacode".equalsIgnoreCase(skill)){
-                        System.out.println("\bJunior_Senior "+le.employeeID);
+                        System.out.println("    Junior_Senior "+le.employeeID);
                         i++;
                     } 
                }
            }
        }
        if(i==0){
-           System.out.println("\bKhông tồn tại .");
+           System.out.println("     Không tồn tại .");
        }
     }
     public static void main(String[] args) {
-        
         List<?>[] listexp=hai_a();
         hai_b(listexp);
         //2c 
-        int i=0;
-        for(List<?> a:listexp){
-            for(Object obj:a){
-                if(obj instanceof Leader2){
-                    System.out.println(i);
-                    i++;
-                }
-            }
-        }
-        System.out.println("Số Leader đã nhập: "+i);
-
+        List<Leader2> listLeader=(List<Leader2>) listexp[2];
+        System.out.println("Số Leader đã nhập: "+listLeader.size());
         //3
         System.out.println("Nhấn ENTER để chuyển sang giao diện GUI");
         Scanner scan=new Scanner(System.in);
-        scan.nextLine();
-        List<Leader2> listL=new ArrayList<>();
-        for(List<?> a:listexp){
-            for(Object obj:a){
-                if(obj instanceof Leader2){
-                    Leader2 le=(Leader2) obj;
-                    listL.add(new Leader2(le.employeeID, le.cardID, le.name, le.skill, le.quality(), le.deadline(), le.exp_year(), le.project()));
-                }
-            }
-        }        
-        GUI2 gui=new GUI2(listL);
-//        gui.use_flatlaf();
+        scan.nextLine();   
+        GUI2 gui=new GUI2(listexp);
     }
     //Hàm kiểm tra xem chuỗi đầu vào có phải toàn là STT 0-9 không , trả về true/false 
     public static boolean isInteger(String str) {
