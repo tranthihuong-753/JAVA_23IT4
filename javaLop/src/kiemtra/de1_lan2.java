@@ -3,6 +3,8 @@ package kiemtra;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,10 +17,12 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
 //jpanel (jpanel(tìm kiếm+jtext) + jpanel(thoát)) --> 3 cai thang hang 
 //jpanel (jpanel( jpanel(tìm kiếm)+ jpanel(jtext) ) + jpanel(thoát)) --> 2 tren 1 duoi 
 //tao bang xong moi tao jscrollpane và tiện chèn luôn table vào thì mới được 
 class GUI2{
+    //Tự thêm nút xóa, điền id vào jtextfield --> hàng bị bôi đen , nếu nhấn vào nút xóa thì sẽ xóa id trong jtextfield, xóa hàng ý luôn 
     public GUI2(List<?>[] list){
         //Tạo JFrame 
         JFrame jframe_big=new JFrame("EXP");
@@ -27,20 +31,24 @@ class GUI2{
         
             JPanel jpanel_big=new JPanel(new GridLayout(2, 1)); // Chia panel thành 2 hàng 1 cột 
                 //JPanel chứa jtextfield, nút tìm kiếm, nút thoát 
-                JPanel jb1=new JPanel();
+                JPanel jpanel_sm=new JPanel();
                     //JPanel chứa jtextfield, nút tìm kiếm
-                    JPanel jpanel_1_1=new JPanel();
+                    JPanel jp1=new JPanel();
                         JTextField jt_employeeID=new JTextField(30);
                         JButton jb_employyID=new JButton("Tìm kiếm");
-                        jpanel_1_1.add(jt_employeeID);
-                        jpanel_1_1.add(jb_employyID);
+                        jp1.add(jt_employeeID);
+                        jp1.add(jb_employyID);
 
-                    JPanel a12=new JPanel();
-                        JButton out=new JButton("Thoát");
-                        out.setLocation(50,50);
-                        a12.add(out);
-                    jb1.add(jpanel_1_1);
-                    jb1.add(a12);
+                    JPanel jp2=new JPanel();
+                        JButton jbutton_thoat=new JButton("Thoát");
+                        jbutton_thoat.setLocation(50,50);
+                        jp2.add(jbutton_thoat);
+                    JPanel jp3=new JPanel();
+                        JButton jbutton_xoa=new JButton("Xóa");
+                        jp3.add(jbutton_xoa);
+                    jpanel_sm.add(jp1);
+                    jpanel_sm.add(jp2);
+                    jpanel_sm.add(jp3);
 
                 // Dữ liệu mảng 2 chiều đại diện cho các dòng và cột trong bảng
                 Object[][] data= new Object[list.length][5];
@@ -81,7 +89,7 @@ class GUI2{
                 // Thêm bảng vào JScrollPane để có thanh cuộn
                 JScrollPane sc_table = new JScrollPane(table);      
 
-            jpanel_big.add(jb1);
+            jpanel_big.add(jpanel_sm);
             jpanel_big.add(sc_table);
 
 //            JScrollPane js=new JScrollPane(jpanel_big);
@@ -94,7 +102,15 @@ class GUI2{
             public void actionPerformed(ActionEvent e) {
                 String txtID = jt_employeeID.getText();
                 if(txtID.length()!=6 || txtID.matches("\\d+")==false){
-                    JOptionPane.showMessageDialog(null, "Chú ý bạn đang tìm kiếm theo employeeID là một chuỗi số nguyên dương có độ dài là 6.","Lỗi", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "! Chú ý bạn đang tìm kiếm theo employeeID là một chuỗi số nguyên dương có độ dài là 6.","Lỗi", JOptionPane.ERROR_MESSAGE);
+                    txtID = txtID.replaceAll("\\D", ""); // Xóa các ký tự không phải số
+                    jt_employeeID.setText(txtID); // Cập nhật lại giá trị trong JTextField
+                    if (txtID.length() > 6) {
+                        txtID = txtID.substring(0, 6); // Xóa bớt ký tự khi length > 6
+                        jt_employeeID.setText(txtID); // Cập nhật lại giá trị trong JTextField
+                    }                  
+                }else{
+                    jt_employeeID.setEditable(false);
                 }
                 for (int row = 0; row < list.length; row++){
                     if(table.getValueAt(row, 0)!=null){
@@ -115,7 +131,15 @@ class GUI2{
             public void actionPerformed(ActionEvent e) {
                 String txtID = jt_employeeID.getText();
                 if(txtID.length()!=6 || txtID.matches("\\d+")==false){
-                    JOptionPane.showMessageDialog(null, "Chú ý bạn đang tìm kiếm theo employeeID là một chuỗi số nguyên dương có độ dài là 6.","Lỗi", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "! Chú ý bạn đang tìm kiếm theo employeeID là một chuỗi số nguyên dương có độ dài là 6.","Lỗi", JOptionPane.ERROR_MESSAGE);
+                    txtID = txtID.replaceAll("\\D", ""); // Xóa các ký tự không phải số
+                    jt_employeeID.setText(txtID); // Cập nhật lại giá trị trong JTextField
+                    if (txtID.length() > 6) {
+                        txtID = txtID.substring(0, 6); // Xóa bớt ký tự khi length > 6
+                        jt_employeeID.setText(txtID); // Cập nhật lại giá trị trong JTextField
+                    }                    
+                }else{
+                    jt_employeeID.setEditable(false);
                 }
                 for (int row = 0; row < table.getRowCount(); row++) {
                     if (table.getValueAt(row, 0) != null) {
@@ -129,14 +153,15 @@ class GUI2{
                 }
             }
         });  
-        //Thoát
-        out.addActionListener(new ActionListener() {
+        //Thoát và ngừng chạy chương trình 
+        jbutton_thoat.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 jframe_big.setVisible(false);
+                System.exit(0);
             }
         });
-        //Nếu list = null thì jpanel_1_1 ở dạng disable 
+        //Nếu list = null thì jp1 ở dạng disable 
         int i=0;
         for(List<?> a:list){
             for(Object obj:a){
@@ -150,10 +175,38 @@ class GUI2{
             }
         }    
         if(i==0){
-            jpanel_1_1.setVisible(false);
+            jp1.setVisible(false);
         }else{
             System.out.println(i);
         }
+//        //JTextField jt_employeeID chỉ nhập chữ số và nhập đúng 6 ký tự 
+//        jt_employeeID.addKeyListener(new KeyAdapter() {
+//            int i=0;
+//            @Override
+//            public void keyTyped(KeyEvent e) {
+//                char c = e.getKeyChar();
+//                String s = String.valueOf(c);                
+//                if(s.matches("\\d+")){
+//                    i++;
+//                    if(i==7){
+//                        jt_employeeID.setEditable(false);
+//                    }
+//                }else{
+//                    JOptionPane.showMessageDialog(null, "!! Chú ý bạn đang tìm kiếm theo employeeID là một chuỗi số nguyên dương có độ dài là 6.","Lỗi", JOptionPane.ERROR_MESSAGE);
+//                }
+//            }
+//        });
+        //nút xóa jbutton_xoa
+        jbutton_xoa.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) {
+                    DefaultTableModel model = (DefaultTableModel) table.getModel();
+                    model.removeRow(selectedRow);
+                }
+            }
+        });        
     }
     //Hàm sử dụng flatlaf 
     public static void use_flatlaf(){

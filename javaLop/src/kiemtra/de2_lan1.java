@@ -5,6 +5,8 @@ package kiemtra;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -19,10 +21,8 @@ import javax.swing.JTextField;
 class GUII{
     public GUII(List<?>[] list){
         JFrame jframe_big =new JFrame("EXP");
-        /**/ 
         jframe_big.setExtendedState(JFrame.MAXIMIZED_BOTH);//Để jframe hiện lên full màn hình
         
-        /**/ 
             JPanel jpanel_big=new JPanel(new GridLayout(2, 1));
                 JPanel jpanel_small=new JPanel(new GridLayout(2, 1));
                     JPanel jp1=new JPanel();
@@ -70,7 +70,6 @@ class GUII{
                     String[] c={"Mã sinh viên", "Họ tên", "Tuổi", "Giới tính", "Nghành học"};
                     JTable table=new JTable(obj, c);    
                     table.setDefaultEditor(Object.class, null);  
-//                    jscroll.add(table);   
                     JScrollPane jscroll=new JScrollPane(table);
             jpanel_big.add(jpanel_small);
             jpanel_big.add(jscroll);
@@ -138,6 +137,7 @@ class GUII{
         }else{
             System.out.println(i);
         }
+        
     }
 }
 
