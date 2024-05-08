@@ -26,7 +26,6 @@ class GUI2{
         JFrame jframe_big=new JFrame("EXP");
         jframe_big.setExtendedState(JFrame.MAXIMIZED_BOTH);//Để jframe hiện lên full màn hình
         use_flatlaf();
-        
             JPanel jpanel_big=new JPanel(new GridLayout(2, 1)); // Chia panel thành 2 hàng 1 cột 
                 //JPanel chứa jtextfield, nút tìm kiếm, nút thoát 
                 JPanel jpanel_sm=new JPanel();
@@ -86,37 +85,41 @@ class GUI2{
                 table.setDefaultEditor(Object.class, null);        
                 // Thêm bảng vào JScrollPane để có thanh cuộn
                 JScrollPane sc_table = new JScrollPane(table);      
-
             jpanel_big.add(jpanel_sm);
             jpanel_big.add(sc_table);
 
         jframe_big.add(jpanel_big);
         jframe_big.setVisible(true); 
-        
-        //Tìm kiến theo employyID , trùng thì bôi xanh 
+        //Thoát và ngừng chạy chương trình 
+        jbutton_thoat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jframe_big.setVisible(false);
+                System.exit(0);
+            }
+        });        
+        //Tìm kiếm theo employyID , trùng thì bôi xanh 
         jb_employyID.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String txtID = jt_employeeID.getText();
                 if(txtID.length()!=6 || txtID.matches("\\d+")==false){
-                    JOptionPane.showMessageDialog(null, "! Chú ý bạn đang tìm kiếm theo employeeID là một chuỗi số nguyên dương có độ dài là 6.","Lỗi", JOptionPane.ERROR_MESSAGE);
-                    txtID = txtID.replaceAll("\\D", ""); // Xóa các ký tự không phải số
-                    jt_employeeID.setText(txtID); // Cập nhật lại giá trị trong JTextField
+                    JOptionPane.showMessageDialog(null, "! Chú ý bạn đang tìm kiếm theo employeeID là một chuỗi có độ dài là 6.");                    
                     if (txtID.length() > 6) {
                         txtID = txtID.substring(0, 6); // Xóa bớt ký tự khi length > 6
                         jt_employeeID.setText(txtID); // Cập nhật lại giá trị trong JTextField
-                    }                  
+                    }      
                 }else{
                     jt_employeeID.setEditable(false);
                 }
-                for (int row = 0; row < list.length; row++){
-                    if(table.getValueAt(row, 0)!=null){
+                for (int row = 0; row < list.length; row++) {
+                    if (table.getValueAt(row, 0) != null) {
                         String employeeID = table.getValueAt(row, 0).toString();
                         if (employeeID.equals(txtID)) {
                             table.setRowSelectionInterval(row, row);
                         } else {
                             table.removeRowSelectionInterval(row, row);
-                        }                        
+                        }
                     }
                 }
             }
@@ -128,17 +131,15 @@ class GUI2{
             public void actionPerformed(ActionEvent e) {
                 String txtID = jt_employeeID.getText();
                 if(txtID.length()!=6 || txtID.matches("\\d+")==false){
-                    JOptionPane.showMessageDialog(null, "! Chú ý bạn đang tìm kiếm theo employeeID là một chuỗi số nguyên dương có độ dài là 6.","Lỗi", JOptionPane.ERROR_MESSAGE);
-                    txtID = txtID.replaceAll("\\D", ""); // Xóa các ký tự không phải số
-                    jt_employeeID.setText(txtID); // Cập nhật lại giá trị trong JTextField
+                    JOptionPane.showMessageDialog(null, "! Chú ý bạn đang tìm kiếm theo employeeID là một chuỗi có độ dài là 6.");                    
                     if (txtID.length() > 6) {
                         txtID = txtID.substring(0, 6); // Xóa bớt ký tự khi length > 6
                         jt_employeeID.setText(txtID); // Cập nhật lại giá trị trong JTextField
-                    }                    
+                    }      
                 }else{
                     jt_employeeID.setEditable(false);
                 }
-                for (int row = 0; row < table.getRowCount(); row++) {
+                for (int row = 0; row < list.length; row++) {
                     if (table.getValueAt(row, 0) != null) {
                         String employeeID = table.getValueAt(row, 0).toString();
                         if (employeeID.equals(txtID)) {
@@ -150,32 +151,6 @@ class GUI2{
                 }
             }
         });  
-        //Thoát và ngừng chạy chương trình 
-        jbutton_thoat.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jframe_big.setVisible(false);
-                System.exit(0);
-            }
-        });
-        //Nếu list = null thì jp1 ở dạng disable 
-        int i=0;
-        for(List<?> a:list){
-            for(Object obj:a){
-                if(obj instanceof Leader2){
-                    i++;
-                }else if(obj instanceof Junior_Senior2){
-                    i++;
-                }else if(obj instanceof Fresher2){
-                    i++;
-                }
-            }
-        }    
-        if(i==0){
-            jp1.setVisible(false);
-        }else{
-            System.out.println(i);
-        }
         //nút xóa jbutton_xoa
         jbutton_xoa.addActionListener(new ActionListener() {
             @Override
@@ -186,7 +161,26 @@ class GUI2{
                     model.removeRow(selectedRow);
                 }
             }
-        });        
+        });          
+        //Nếu list = null thì jp1 ở dạng disable , không dùng được if(list==null) đâu 
+        int i=0;        
+        List<Fresher2> listfr =(List<Fresher2>)list[0];
+        List<Junior_Senior2> listjs =(List<Junior_Senior2>)list[1];
+        List<Leader2> listle =(List<Leader2>)list[2];
+        for(Fresher2 x: listfr){
+            i++;
+        }
+        for(Junior_Senior2 x: listjs){
+            i++;           
+        }
+        for(Leader2 x: listle){
+            i++;          
+        }    
+        if(i==0){
+            jp1.setVisible(false);
+        }else{
+            System.out.println(i);
+        }      
     }
     //Hàm sử dụng flatlaf 
     public static void use_flatlaf(){
@@ -318,7 +312,7 @@ public class de1_lan2{
                 while(cardID.length()!=12 || !isInteger(cardID) ){
                     System.out.println("! Chú ý cardID là dãy số nguyên có độ dài 12.");
                     System.out.print("Số CCCD cardID: ");
-                    cardID=scan.nextLine();
+                    System.out.println(cardID.replaceAll("\\D+", ""));
                 }
                 //Nhập vào name 
                 System.out.print("name: ");
@@ -363,7 +357,7 @@ public class de1_lan2{
                 while(cardID.length()!=12 || !isInteger(cardID) ){
                     System.out.println("! Chú ý cardID là dãy số nguyên có độ dài 12.");
                     System.out.print("Số CCCD cardID: ");
-                    cardID=scan.nextLine();
+                    System.out.println(cardID.replaceAll("\\D+", ""));
                 }
                 //Nhập vào name 
                 System.out.print("name: ");
@@ -398,11 +392,11 @@ public class de1_lan2{
                     if (scan.hasNextInt()) {                      
                         exp_year = scan.nextInt();
                         scan.nextLine(); // Đọc ký tự thừa sau khi nhập số
-                if (exp_year >= 0) {
-                    break; // Thoát vòng lặp nếu nhập số thành công và thỏa mãn điều kiện
-                } else {
-                    System.out.println("! Chú ý exp_year phải là số nguyên lớn hơn -1 .");
-                }
+                        if (exp_year >= 0) {
+                            break; // Thoát vòng lặp nếu nhập số thành công và thỏa mãn điều kiện
+                        } else {
+                            System.out.println("! Chú ý exp_year phải là số nguyên lớn hơn -1 .");
+                        }
                     } else {
                         System.out.println("! Chú ý exp_year phải là số nguyên lớn hơn -1 .");
                         scan.nextLine(); // Đọc ký tự thừa sau khi nhập dữ liệu không hợp lệ
@@ -425,7 +419,7 @@ public class de1_lan2{
                 while(cardID.length()!=12 || !isInteger(cardID) ){
                     System.out.println("! Chú ý cardID là dãy số nguyên có độ dài 12.");
                     System.out.print("Số CCCD cardID: ");
-                    cardID=scan.nextLine();
+                    System.out.println(cardID.replaceAll("\\D+", ""));
                 }
                 //Nhập vào name 
                 System.out.print("name: ");
@@ -493,35 +487,30 @@ public class de1_lan2{
     public static void hai_b(List<?>[] listmain){
         System.out.println("Đối tượng có skill = javacode là : ");
         int i=0;
-       for(List<?> list:listmain){
-           for(Object obj:list){
-               if(obj instanceof Fresher2){
-                    Fresher2 fr = (Fresher2) obj;
-                    String skill = fr.skill;
-                    if("javacode".equalsIgnoreCase(skill)){
-                        System.out.println("    Fresher "+fr.employeeID);
-                        i++;
-                    }
-               }else if(obj instanceof Junior_Senior2){
-                    Junior_Senior2 js = (Junior_Senior2) obj;
-                    String skill = js.skill;
-                    if("javacode".equalsIgnoreCase(skill)){
-                        System.out.println("    Junior_Senior "+js.employeeID);
-                        i++;
-                    }
-               }else if(obj instanceof Leader2){
-                    Leader2 le = (Leader2) obj;
-                    String skill = le.skill;
-                    if("javacode".equalsIgnoreCase(skill)){
-                        System.out.println("    Junior_Senior "+le.employeeID);
-                        i++;
-                    } 
-               }
-           }
-       }
-       if(i==0){
+        List<Fresher2> listfr =(List<Fresher2>)listmain[0];
+        List<Junior_Senior2> listjs =(List<Junior_Senior2>)listmain[1];
+        List<Leader2> listle =(List<Leader2>)listmain[2];
+        for(Fresher2 x: listfr){
+            if("javacode".equalsIgnoreCase(x.skill)){
+                System.out.println("    Fresher "+x.employeeID);
+                i++;
+            }
+        }
+        for(Junior_Senior2 x: listjs){
+            if("javacode".equalsIgnoreCase(x.skill)){
+                System.out.println("    Junior_Senior "+x.employeeID);
+                i++;
+            }            
+        }
+        for(Leader2 x: listle){
+            if("javacode".equalsIgnoreCase(x.skill)){
+                System.out.println("    Leader "+x.employeeID);
+                i++;
+            }            
+        }        
+        if(i==0){
            System.out.println("     Không tồn tại .");
-       }
+        }
     }
     public static void main(String[] args) {
         List<?>[] listexp=hai_a();
