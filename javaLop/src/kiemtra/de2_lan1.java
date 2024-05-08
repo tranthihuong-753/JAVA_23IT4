@@ -17,6 +17,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.PlainDocument;
 
 class GUII{
     public GUII(List<?>[] list){
@@ -40,7 +44,6 @@ class GUII{
                     jpanel_small.add(jp1);
                     jpanel_small.add(jp2);
 
-//                JScrollPane jscroll=new JScrollPane();
                     Object[][] obj=new Object[list.length][5];
                     int r=0;
                     List<BusinessStudent> listkd=(List<BusinessStudent>)list[0];
@@ -137,7 +140,24 @@ class GUII{
         }else{
             System.out.println(i);
         }
-        
+        // Tạo DocumentFilter để kiểm tra và chặn các ký tự không phải số nguyên
+        DocumentFilter numberFilter = new DocumentFilter() {
+            @Override
+            public void insertString(FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException {
+                if (text.matches("\\d+")) {
+                    super.insertString(fb, offset, text, attr);
+                }
+            }
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if (text.matches("\\d+")) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        };
+        // Áp dụng DocumentFilter vào JTextField
+        jtext.setDocument(new PlainDocument());
+        ((PlainDocument) jtext.getDocument()).setDocumentFilter(numberFilter);    
     }
 }
 

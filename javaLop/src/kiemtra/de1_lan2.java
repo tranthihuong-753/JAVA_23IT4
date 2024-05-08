@@ -3,8 +3,6 @@ package kiemtra;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -92,7 +90,6 @@ class GUI2{
             jpanel_big.add(jpanel_sm);
             jpanel_big.add(sc_table);
 
-//            JScrollPane js=new JScrollPane(jpanel_big);
         jframe_big.add(jpanel_big);
         jframe_big.setVisible(true); 
         
@@ -179,23 +176,6 @@ class GUI2{
         }else{
             System.out.println(i);
         }
-//        //JTextField jt_employeeID chỉ nhập chữ số và nhập đúng 6 ký tự 
-//        jt_employeeID.addKeyListener(new KeyAdapter() {
-//            int i=0;
-//            @Override
-//            public void keyTyped(KeyEvent e) {
-//                char c = e.getKeyChar();
-//                String s = String.valueOf(c);                
-//                if(s.matches("\\d+")){
-//                    i++;
-//                    if(i==7){
-//                        jt_employeeID.setEditable(false);
-//                    }
-//                }else{
-//                    JOptionPane.showMessageDialog(null, "!! Chú ý bạn đang tìm kiếm theo employeeID là một chuỗi số nguyên dương có độ dài là 6.","Lỗi", JOptionPane.ERROR_MESSAGE);
-//                }
-//            }
-//        });
         //nút xóa jbutton_xoa
         jbutton_xoa.addActionListener(new ActionListener() {
             @Override
