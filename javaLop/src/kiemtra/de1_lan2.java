@@ -97,7 +97,7 @@ class GUI2{
                 jframe_big.setVisible(false);
                 System.exit(0);
             }
-        });        
+        });   
         //Tìm kiếm theo employyID , trùng thì bôi xanh 
         jb_employyID.addActionListener(new ActionListener() {
             @Override
@@ -109,8 +109,6 @@ class GUI2{
                         txtID = txtID.substring(0, 6); // Xóa bớt ký tự khi length > 6
                         jt_employeeID.setText(txtID); // Cập nhật lại giá trị trong JTextField
                     }      
-                }else{
-                    jt_employeeID.setEditable(false);
                 }
                 for (int row = 0; row < list.length; row++) {
                     if (table.getValueAt(row, 0) != null) {
@@ -136,8 +134,6 @@ class GUI2{
                         txtID = txtID.substring(0, 6); // Xóa bớt ký tự khi length > 6
                         jt_employeeID.setText(txtID); // Cập nhật lại giá trị trong JTextField
                     }      
-                }else{
-                    jt_employeeID.setEditable(false);
                 }
                 for (int row = 0; row < list.length; row++) {
                     if (table.getValueAt(row, 0) != null) {
@@ -155,11 +151,12 @@ class GUI2{
         jbutton_xoa.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int selectedRow = table.getSelectedRow();
-                if (selectedRow != -1) {
-                    DefaultTableModel model = (DefaultTableModel) table.getModel();
-                    model.removeRow(selectedRow);
-                }
+//                int selectedRow = table.getSelectedRow();
+//                if (selectedRow != -1) {
+//                    DefaultTableModel model = (DefaultTableModel) table.getModel();
+//                    model.removeRow(selectedRow);
+//                }                 
+                
             }
         });          
         //Nếu list = null thì jp1 ở dạng disable , không dùng được if(list==null) đâu 

@@ -258,13 +258,22 @@ public class de2_lan1 {
     //Nhập vào số nguyên dương n, sai thì nhập lại 
     public static int hai_a(){
         Scanner scan=new Scanner(System.in);
-        System.out.print("Nhập vào số nguyên dương : ");
-        Double a=scan.nextDouble();
-        while(a<=0 || a%1!=0){
-            a=scan.nextDouble();
+        int number;
+        while (true) {
+            System.out.print("Nhập một số nguyên dương: ");
+            if (scan.hasNextInt()) {
+                number = scan.nextInt();
+                if (number > 0) {
+                    break; // Thoát khỏi vòng lặp nếu số nguyên dương
+                }
+            } else {
+                scan.next(); // Đọc và bỏ qua đầu vào không phải số nguyên
+            }
+            System.out.println("!Chú ý không hợp lệ nhập vào số nguyên dương .");
         }
-        return (int)(a/1);
-    }
+        return number;
+    }       
+    
     //Nhập mảng n đối tượng Student 
     public static List<?>[] bai_b(int n){
         Scanner scan=new Scanner(System.in);
@@ -280,31 +289,49 @@ public class de2_lan1 {
             String exp=scan.nextLine();
             System.out.print("Name: ");
             String name=scan.nextLine();
-            System.out.print("Age: ");
-            int age=scan.nextInt();
-            scan.nextLine();
-            while(age<=0){
-                System.out.println("!Chú ý age phải nguyên dương.");
+            int age;
+            while (true) {
                 System.out.print("Age: ");
-                age=scan.nextInt();
-                scan.nextLine();                
-            }
-            System.out.print("Gender(nam=1, nữ=0): ");
-            int gender=scan.nextInt();
-            scan.nextLine(); 
-            while(gender!=0 && gender!=1){
-                System.out.println("! Chý ý giới tính được chỉ định nam là 1, nữ là 0.");
+                if (scan.hasNextInt()) {
+                    age = scan.nextInt();
+                    if (age > 0) {
+                        break; // Thoát khỏi vòng lặp nếu số nguyên dương
+                    }
+                } else {
+                    scan.next(); // Đọc và bỏ qua đầu vào không phải số nguyên
+                }
+                System.out.println("! Chú ý age là một số nguyên dương.");
+            }    
+            int gender;
+            while (true) {
                 System.out.print("Gender(nam=1, nữ=0): ");
-                gender=scan.nextInt(); 
-                scan.nextLine(); 
-            }
+                if (scan.hasNextInt()) {
+                    gender = scan.nextInt();
+                    if (gender > 0) {
+                        break; // Thoát khỏi vòng lặp nếu số nguyên dương
+                    }
+                } else {
+                    scan.next(); // Đọc và bỏ qua đầu vào không phải số nguyên
+                }
+                System.out.println("! Chý ý giới tính được chỉ định nam là 1, nữ là 0.");
+            }                
             System.out.print("Bank_account: ");
             String bank_account=scan.nextLine();
             System.out.print("ID: ");
             String studentID=scan.nextLine();
-            System.out.print("GPA: ");
-            float gpa=scan.nextFloat();
-            scan.nextLine();
+            float gpa;
+            while (true) {
+                System.out.print("GPA: ");
+                if (scan.hasNextFloat()) {
+                    gpa=scan.nextFloat();
+                    if (gpa > 0) {
+                        break; // Thoát khỏi vòng lặp nếu số nguyên dương
+                    }
+                } else {
+                    scan.next(); // Đọc và bỏ qua đầu vào không phải số nguyên
+                }
+                System.out.println("! Chý ý đầu vào không hợp lệ .");
+            }  
             System.out.print("Specialization: ");
             String specialization=scan.nextLine();            
             if("kd".equalsIgnoreCase(exp)){
@@ -318,6 +345,14 @@ public class de2_lan1 {
         return list;
     }
     public static void main(String[] args) {
+        //1
+        BusinessStudent st_bu=new BusinessStudent("NGUYEN VAN A", 18, 1, "001222222", "000000123", 3, "Business");
+        System.out.println(st_bu.name+" "+st_bu.getRole()+" "+st_bu.caculaterKPI());
+        ITStudent st_it=new ITStudent("NGUYEN THI C", 18, 0, "001235746", "000000121", 1, "IT");
+        System.out.println(st_it.name+" "+st_it.getRole()+" "+st_it.caculaterKPI());
+        LanguageStudent st_la=new LanguageStudent("NGUYEN THI B", 18, 0, "001235746", "000000124", 2, "IT");
+        System.out.println(st_la.name+" "+st_la.getRole()+" "+st_la.caculaterKPI());
+        
         int n=hai_a();
         List<?>[] list=bai_b(n);
         List<BusinessStudent> listkd=(List<BusinessStudent>)list[0];

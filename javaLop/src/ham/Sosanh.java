@@ -6,6 +6,7 @@ public class Sosanh {
     //Output true/false 
     public static boolean equals_st(Object a, Object b){
         //Dùng equalsIgnoreCase thì sẽ không phân biệt in hoa in thường 
+        //x.skill.toLowerCase().contains("javacode")  thì x="JaVaCode va toan" thì trả về KQ true 
         if(a.equals(b)){
             return true;
         }
